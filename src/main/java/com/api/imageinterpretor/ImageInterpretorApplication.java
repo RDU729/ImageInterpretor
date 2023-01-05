@@ -5,9 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class ImageInterpretorApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(ImageInterpretorApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ImageInterpretorApplication.class, args);
+    }
 
 }
