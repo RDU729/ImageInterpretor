@@ -1,9 +1,6 @@
 package com.api.imageinterpretor.controller;
 
-import com.api.imageinterpretor.dto.SignUpDTO;
-import com.api.imageinterpretor.model.repository.ImageRepo;
 import com.api.imageinterpretor.service.ImageServiceImpl;
-import com.api.imageinterpretor.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
@@ -24,11 +21,15 @@ public class ImageController {
     private ImageServiceImpl imageService;
 
     @PostMapping(value = "/sendPhoto")
-    public ResponseEntity<InputStreamResource> processRegister( @RequestParam("imagefile") MultipartFile imagefile) throws IOException {
+    public ResponseEntity<InputStreamResource> processRegister(@RequestParam("imagefile") MultipartFile imagefile) throws IOException {
         imageService.saveImage(imagefile);
         InputStream inputStream = imagefile.getInputStream();
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(new InputStreamResource(inputStream));
+    }
+    @GetMapping(value = "/hi")
+    public String sayHi() {
+        return "Hi";
     }
 }
