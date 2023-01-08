@@ -5,9 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Lob;
 
 
 @Entity
@@ -17,7 +14,7 @@ import javax.persistence.Lob;
 @Table(name = "img")
 public class Image {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Lob
     private String base64;
