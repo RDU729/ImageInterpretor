@@ -8,6 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class SignUpDTO {
+    private String name;
     private String email;
     private String password;
 }

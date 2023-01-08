@@ -1,0 +1,18 @@
+create sequence hibernate_sequence increment by 1;
+
+create table util
+(
+    id       number default hibernate_sequence.nextval,
+    email    VARCHAR2(50),
+    password VARCHAR2(50),
+    enabled  INT,
+    PRIMARY KEY (id)
+);
+
+create table auth
+(
+    username  number,
+    authority varchar2(50),
+    foreign key (username) references util (id)
+);
+create unique index ix_auth_username on auth (username, authority);
