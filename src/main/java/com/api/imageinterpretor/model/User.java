@@ -1,33 +1,27 @@
 package com.api.imageinterpretor.model;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
+import javax.persistence.*;
 
 
 @Entity
+@ToString
 @Getter
 @Setter
-@ToString
-@Table(name = "Utilizatorii")
+@Table(name = "utilizatori")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(nullable = false, unique = true, length = 45)
+    private String name;
+    //@Column(nullable = false, unique = true, length = 45)
+    @Id
     private String email;
 
-    @Column(nullable = false, length = 64)
+    //@Column(nullable = false, length = 64)
     private String password;
 
-    @Column(name = "first_name", nullable = false, length = 20)
-    private String firstName;
-
-    @Column(name = "last_name", nullable = false, length = 20)
-    private String lastName;
+    private int enabled;
 }
 
 

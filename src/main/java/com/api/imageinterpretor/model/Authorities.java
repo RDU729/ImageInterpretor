@@ -6,16 +6,22 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-
 @Entity
+@ToString
 @Getter
 @Setter
-@ToString
-@Table(name = "img")
-public class Image {
+@Table(name = "authorities")
+public class Authorities {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Lob
-    private String base64;
+
+    private String email;
+
+    private String authority;
+
 }
+
+
+
