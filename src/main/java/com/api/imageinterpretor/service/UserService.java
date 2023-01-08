@@ -27,7 +27,7 @@ public class UserService {
 
         User user = new User();
         String encodedPass = passwordEncoder().encode(signUpDTO.getPassword());
-        String noopEncodedPass = "{{noop}}" + encodedPass;
+        String noopEncodedPass = "{noop}" + encodedPass;
 
         user.setName(signUpDTO.getName());
         user.setEmail(signUpDTO.getEmail());

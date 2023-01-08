@@ -12,9 +12,6 @@ import javax.persistence.*;
 @Table(name = "utilizatori")
 public class User {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private Long id;
 
     private String name;
     //@Column(nullable = false, unique = true, length = 45)
