@@ -127,6 +127,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <defaultSchema>schema2</defaultSchema>
                     <driver>org.oracle.jdbc.driver</driver>
                     <url>jdbc:oracle:thin:@//localhost:1521/XEPDB1</url>
                     <user>system</user>
@@ -138,7 +139,6 @@
                             filesystem:src/main/resources/db/migration
                         </location>
                     </locations>
-                        <table>my_schema_history_table</table>
                 </configuration>
             </plugin>
        </plugins>

@@ -23,8 +23,10 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public void saveImage(MultipartFile file) throws IOException {
         Image image = new Image();
+        long id = (long) imageRepo.findAll().size() + 1;
         String encodedMime = Base64.getMimeEncoder().encodeToString(file.getBytes());
 
+        image.setId(id);
         image.setBase64(encodedMime);
         try {
             imageRepo.save(image);

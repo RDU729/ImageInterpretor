@@ -14,10 +14,10 @@ import javax.persistence.Lob;
 @Getter
 @Setter
 @ToString
-@Table(name = "Imagine")
+@Table(name = "img")
 public class Image {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Lob
     private String base64;
