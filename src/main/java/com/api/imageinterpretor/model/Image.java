@@ -14,8 +14,10 @@ import javax.persistence.*;
 @Table(name = "img")
 public class Image {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "img_sequence")
+    @SequenceGenerator(name = "img_sequence", allocationSize = 1)
     private Long id;
+
     @Lob
     private String base64;
 

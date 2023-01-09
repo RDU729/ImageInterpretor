@@ -1,6 +1,12 @@
+CREATE SEQUENCE flow_sequence
+    START WITH 1
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
 CREATE TABLE flow
 (
-    id            NUMBER default hibernate_sequence.nextval,
+    id            NUMBER default flow_sequence.nextval,
     pid           varchar2(200),
     user_email    varchar2(200),
     img_id        NUMBER,

@@ -27,7 +27,9 @@ public class FlowServiceImpl {
     public void initFlow(Image image) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        authentication.getPrincipal();
         String currentPrincipalName = authentication.getName();
+
         Optional<User> userOptional = userRepo.findByEmail(currentPrincipalName);
         User user = userOptional.get();
 
@@ -37,8 +39,6 @@ public class FlowServiceImpl {
         flow.setPid(String.valueOf(UUID.randomUUID()));
         flow.setUser(user);
         flow.setImage(image);
-//        flow.setLastUpdate(String.valueOf(LocalDateTime.now()));
-//        flow.setCreationDate(String.valueOf(LocalDateTime.now()));
         flow.setLastUpdate(Timestamp.valueOf(LocalDateTime.now()));
         flow.setCreationDate(Timestamp.valueOf(LocalDateTime.now()));
 

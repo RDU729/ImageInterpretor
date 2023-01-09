@@ -18,9 +18,11 @@ public class Flow {
     private Long id;
 
     private String pid;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_email", referencedColumnName = "email")
+    //
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "user_email", referencedColumnName = "email")
+    @ManyToOne
+    @JoinColumn(name = "user_email")
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
