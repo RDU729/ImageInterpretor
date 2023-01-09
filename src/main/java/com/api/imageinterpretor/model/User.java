@@ -22,6 +22,8 @@ public class User {
     private String password;
 
     private int enabled;
+
+    private String activationCode;
 }
 
 

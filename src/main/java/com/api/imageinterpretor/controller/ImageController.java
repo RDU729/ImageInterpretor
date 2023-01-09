@@ -1,5 +1,6 @@
 package com.api.imageinterpretor.controller;
 
+import com.api.imageinterpretor.service.EmailServiceImpl;
 import com.api.imageinterpretor.service.ImageServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

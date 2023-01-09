@@ -18,6 +18,13 @@ public class UserController {
     @PostMapping(value = "/signup")
     public ResponseEntity<String> processRegister(@RequestBody SignUpDTO signUpDTO) {
         userService.signUp(signUpDTO);
-        return ResponseEntity.ok("Done");
+        return ResponseEntity.ok("Signup successfull. An email has been sent to your email address");
+    }
+
+    @RequestMapping(path = "activate/{hash}")
+    public ResponseEntity<String> activateAccount(/*@PathVariable("email") String email,*/
+                                                  @PathVariable("hash") String uuid) {
+        userService.activateAccount(/*email,*/uuid);
+        return ResponseEntity.ok("Account activated");
     }
 }
