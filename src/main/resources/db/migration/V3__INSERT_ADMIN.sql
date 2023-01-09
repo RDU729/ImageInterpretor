@@ -1,5 +1,5 @@
 INSERT INTO UTILIZATORI(NAME, EMAIL, PASSWORD, ENABLED, ACTIVATION_CODE)
-VALUES('sa','sa','{noop}sa',1,'n/a');
+VALUES('sa','sa@sa','{noop}sa',1,'n/a');
 
-INSERT  INTO authorities(EMAIL, AUTHORITY) VALUES('sa','ROLE_ADMIN');
+INSERT  INTO authorities(EMAIL, AUTHORITY) VALUES('sa@sa','ROLE_ADMIN');
 

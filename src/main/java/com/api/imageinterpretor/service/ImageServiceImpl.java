@@ -16,6 +16,7 @@ import java.util.Base64;
 @Slf4j
 public class ImageServiceImpl implements ImageService {
     private final ImageRepo imageRepo;
+    private final FlowServiceImpl flowService;
 
     @Override
     public void saveImage(MultipartFile file) throws IOException {
@@ -24,7 +25,9 @@ public class ImageServiceImpl implements ImageService {
 
         image.setBase64(encodedMime);
         try {
-            imageRepo.save(image);
+            Image imageFromDb = imageRepo.save(image);
+
+            flowService.initFlow(imageFromDb);
 
         } catch (Exception e) {
             log.info(e.getMessage());
