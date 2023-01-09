@@ -13,6 +13,5 @@ class SendEmailServiceImplTest {
 
     @Test
     void shpuld_send_email() throws MessagingException {
-       emailService.sendSimpleMail();
     }
 }

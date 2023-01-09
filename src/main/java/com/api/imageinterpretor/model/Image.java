@@ -18,4 +18,7 @@ public class Image {
     private Long id;
     @Lob
     private String base64;
+
+    @OneToOne(mappedBy = "image")
+    private Flow flow;
 }

@@ -24,6 +24,9 @@ public class User {
     private int enabled;
 
     private String activationCode;
+
+    @OneToOne(mappedBy = "user")
+    private Flow flow;
 }
 
 
