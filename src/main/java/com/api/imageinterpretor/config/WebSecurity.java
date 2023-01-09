@@ -33,7 +33,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(authorize -> {
-                    authorize.antMatchers("/api/v1/hi", "/api/v1/signup").permitAll();
+                    authorize.antMatchers("/api/v1/hi", "/api/v1/signup","/api/v1/activate/**").permitAll();
                 })
                 .authorizeRequests()
                 .anyRequest().authenticated()
