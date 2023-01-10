@@ -6,6 +6,7 @@ import com.api.imageinterpretor.model.repository.FlowRepo;
 import com.api.imageinterpretor.model.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class RetriveServiceImpl {
+public class RetrieveServiceImpl {
     private final FlowRepo flowRepo;
     private final UserRepo userRepo;
 
@@ -34,5 +35,10 @@ public class RetriveServiceImpl {
             imageList.add(id);
         }
         return imageList;
+    }
+
+    public InputStreamResource getOneImage(){
+
+        return  null;
     }
 }
