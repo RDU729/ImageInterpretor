@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@ToString
+//@ToString
 @Table(name = "img")
 public class Image {
     @Id
@@ -19,7 +19,7 @@ public class Image {
     private Long id;
 
     @Lob
-    private String base64;
+    private byte[] base64;
 
     @OneToOne(mappedBy = "image")
     private Flow flow;
