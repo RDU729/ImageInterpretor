@@ -29,12 +29,8 @@ public class ImageController {
                 .body(new InputStreamResource(inputStream1));
     }
 
-    @GetMapping(value = "/hi/{id}")
-    public ResponseEntity<InputStreamResource> sayHi(@PathVariable("id") String id) throws IOException {
-        InputStream image = imageService.getImage(Long.valueOf(id));
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(new InputStreamResource(image));
+    @GetMapping(value = "/hi/")
+    public ResponseEntity<String> sayHi() {
+        return ResponseEntity.ok("Hi");
     }
 }

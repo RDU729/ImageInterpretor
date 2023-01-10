@@ -1,6 +1,5 @@
 package com.api.imageinterpretor.controller;
 
-import com.api.imageinterpretor.service.ImageServiceImpl;
 import com.api.imageinterpretor.service.RetrieveServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +22,17 @@ public class RetrieveController {
     @Autowired
     RetrieveServiceImpl retrieveService;
 
-    @Autowired
-    ImageServiceImpl imageService;
-
     @RequestMapping(path = "retrieve/all")
-    public ResponseEntity<List<Long>> retrieveAll(){
-            List<Long> allByAUser = retrieveService.getAllByAUser();
-            return ResponseEntity.ok(allByAUser);
+    public ResponseEntity<List<Long>> retrieveAll() {
+        List<Long> allByAUser = retrieveService.getAllByAUser();
+        return ResponseEntity.ok(allByAUser);
     }
 
     @RequestMapping(path = "retrieve/{path}")
     public ResponseEntity<InputStreamResource> retrieveOne(@PathVariable("path") Long path) throws IOException {
-            InputStream image = imageService.getImage(path);
-            return ResponseEntity.ok()
-                    .contentType(MediaType.IMAGE_JPEG)
-                    .body(new InputStreamResource(image));
+        InputStream image = retrieveService.getImage(path);
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(new InputStreamResource(image));
     }
 }
