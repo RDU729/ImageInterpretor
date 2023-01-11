@@ -8,12 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static com.api.imageinterpretor.exception.ErrorCodes.FILE_COULD_NOT_BE_READ;
-import static com.api.imageinterpretor.exception.ErrorCodes.IMAGE_COULD_NOT_BE_SAVED;
+import static com.api.imageinterpretor.exception.ErrorCodes.*;
 
 @Service
 @RequiredArgsConstructor
@@ -24,10 +24,12 @@ public class ImageServiceImpl {
 
     public InputStream saveImage(MultipartFile file) {
         try {
-            Image image = new Image();
+            validateFileType(file);
 
+            Image image = new Image();
             byte[] bytes = file.getBytes();
             log.info("File converted to bytes");
+
             InputStream targetStream = new ByteArrayInputStream(bytes);
 
             image.setBase64(bytes);
@@ -45,6 +47,16 @@ public class ImageServiceImpl {
             return targetStream;
         } catch (IOException ioException) {
             throw new ServiceException(FILE_COULD_NOT_BE_READ);
+        }
+    }
+
+    private void validateFileType(MultipartFile file) throws IOException {
+        try (InputStream input = file.getInputStream()) {
+            try {
+                ImageIO.read(input).toString();
+            } catch (Exception e) {
+                throw new ServiceException(UNSUPPORTED_FILE_TYPE);
+            }
         }
     }
 }

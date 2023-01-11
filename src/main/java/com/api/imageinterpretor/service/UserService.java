@@ -34,6 +34,9 @@ public class UserService {
         if(userRepo.findByEmail(signUpDTO.getEmail()).isEmpty()){
 
             User user = new User();
+            if(!signUpDTO.getEmail().contains(".")){
+                throw new ServiceException(INVALID_EMAIL_ADDRESS_FORMAT);
+            }
             String encodedPass = passwordEncoder().encode(signUpDTO.getPassword());
             String noopEncodedPass = "{noop}" + encodedPass;
 
@@ -41,7 +44,6 @@ public class UserService {
             user.setEmail(signUpDTO.getEmail());
             user.setPassword(noopEncodedPass);
             user.setEnabled(0);
-            //UUID.randomUUID()
 
             String activationCode = String.valueOf(UUID.randomUUID());
             user.setActivationCode(activationCode);
