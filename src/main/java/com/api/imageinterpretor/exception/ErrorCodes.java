@@ -16,7 +16,7 @@ public enum ErrorCodes implements GlobalErrorCodes {
     FILE_COULD_NOT_BE_READ("Error occurred when trying to read file"),
 
     USER_ALREADY_EXISTS_WITH_THIS_EMAIL("There is another account with the same email address"),
-    INVALID_EMAIL_ADDRESS_FORMAT("Email adress does not appear to be valid"),
+    INVALID_EMAIL_ADDRESS_FORMAT("Email address does not appear to be valid"),
 
     IMAGE_NOT_FOUND("Image not found"),
     IMAGE_COULD_NOT_BE_SAVED("Error occurred when trying to save image"),
