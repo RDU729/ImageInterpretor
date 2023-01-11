@@ -1,5 +1,6 @@
 package com.api.imageinterpretor.service;
 
+import com.api.imageinterpretor.controller.exception.ServiceException;
 import com.api.imageinterpretor.dto.SignUpDTO;
 import com.api.imageinterpretor.model.Authorities;
 import com.api.imageinterpretor.model.User;
@@ -12,8 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+
+import static com.api.imageinterpretor.exception.ErrorCodes.ACTIVATION_TOKEN_DID_NOT_MATCH_ANY_USER;
+import static com.api.imageinterpretor.exception.ErrorCodes.ACTIVATION_TOKEN_MATCHED_MORE_THAN_ONE_USER;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -55,28 +58,23 @@ public class UserService {
         log.info(String.valueOf(user));
     }
 
-    public void activateAccount(/*String email,*/ String uuid) {
+    public void activateAccount(String uuid) {
+        int activationCheck = 0;
         List<User> all = userRepo.findAll();
         for (var e : all)
             if (e.getActivationCode().equals(uuid)) {
                 e.setEnabled(1);
                 userRepo.save(e);
+                log.info("Activated user with email :{} ", e.getEmail());
+                activationCheck++;
             }
+        if (activationCheck == 0) {
+            throw new ServiceException(ACTIVATION_TOKEN_DID_NOT_MATCH_ANY_USER, "Activation token did not correspond to any user");
+        }
+        if (activationCheck > 1) {
+            throw new ServiceException(ACTIVATION_TOKEN_MATCHED_MORE_THAN_ONE_USER, "Activation token activated more than one user");
+        }
     }
-
-//        if (userOptional.isPresent()) {
-//            User user = userOptional.get();
-//
-//            if (user.getActivationCode().equals(uuid)) {
-//                user.setEnabled(1);
-//                userRepo.save(user);
-//                //log.info("Activation successful account for {}", email);
-//            } else {
-//                log.info("Activation code invalid");
-//            }
-//        } else {
-//            log.info("No user found");
-//        }
 }
 
 

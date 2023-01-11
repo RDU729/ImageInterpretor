@@ -4,7 +4,7 @@ import com.api.imageinterpretor.exception.ErrorCodes;
 import lombok.Getter;
 
 @Getter
-public class ServiceException extends Exception {
+public class ServiceException extends RuntimeException {
     private ErrorCodes errorCode;
     private String message;
 
