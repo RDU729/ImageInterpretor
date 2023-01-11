@@ -15,7 +15,6 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    private static final String QUERY = "select email, password from utilizatori where email = ?";
     private static final String QUERY2 = "select email, password, enabled from SYSTEM.utilizatori where email = ?";
     private static final String AUTHORITIES_QUERY = "select email, authority from authorities where email = ?";
     private final DataSource dataSource;
@@ -26,7 +25,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .usersByUsernameQuery(QUERY2)
                 .authoritiesByUsernameQuery(AUTHORITIES_QUERY);
-
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.api.imageinterpretor.service;
 
+import com.api.imageinterpretor.controller.exception.ServiceException;
 import com.api.imageinterpretor.model.Image;
 import com.api.imageinterpretor.model.repository.ImageRepo;
 import lombok.RequiredArgsConstructor;
@@ -7,10 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Optional;
+
+import static com.api.imageinterpretor.exception.ErrorCodes.*;
 
 @Service
 @RequiredArgsConstructor
@@ -19,33 +22,41 @@ public class ImageServiceImpl {
     private final ImageRepo imageRepo;
     private final FlowServiceImpl flowService;
 
-    public InputStream saveImage(MultipartFile file) throws IOException {
-        Image image = new Image();
-        byte[] bytes = file.getBytes();
-        InputStream targetStream = new ByteArrayInputStream(bytes);
-
-        image.setBase64(bytes);
-
+    public InputStream saveImage(MultipartFile file) {
         try {
-            Image imageFromDb = imageRepo.save(image);
+            validateFileType(file);
 
-            flowService.initFlow(imageFromDb);
+            Image image = new Image();
+            byte[] bytes = file.getBytes();
+            log.info("File converted to bytes");
 
-        } catch (Exception e) {
-            log.info(e.getMessage());
+            InputStream targetStream = new ByteArrayInputStream(bytes);
+
+            image.setBase64(bytes);
+
+            try {
+                Image imageFromDb = imageRepo.save(image);
+                flowService.initFlow(imageFromDb);
+                log.info("Image saved successfully !");
+                log.info("Flow created !");
+
+            } catch (Exception e) {
+                log.info(e.getMessage());
+                throw new ServiceException(IMAGE_COULD_NOT_BE_SAVED);
+            }
+            return targetStream;
+        } catch (IOException ioException) {
+            throw new ServiceException(FILE_COULD_NOT_BE_READ);
         }
-
-        return targetStream;
     }
 
-    public InputStream getImage(Long id) throws IOException {
-        Optional<Image> imageOptional = imageRepo.findById(id);
-        Image image = imageOptional.get();
-
-        byte[] base64 = image.getBase64();
-
-        InputStream inputStream = new ByteArrayInputStream(base64);
-
-        return inputStream;
+    private void validateFileType(MultipartFile file) throws IOException {
+        try (InputStream input = file.getInputStream()) {
+            try {
+                ImageIO.read(input).toString();
+            } catch (Exception e) {
+                throw new ServiceException(UNSUPPORTED_FILE_TYPE);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.api.imageinterpretor.service;
 
+import com.api.imageinterpretor.controller.exception.ServiceException;
 import com.api.imageinterpretor.model.Flow;
 import com.api.imageinterpretor.model.Image;
 import com.api.imageinterpretor.model.User;
@@ -16,6 +17,8 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.api.imageinterpretor.exception.ErrorCodes.OPTIONAL_FOUND_EMPTY;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -31,17 +34,22 @@ public class FlowServiceImpl {
         String currentPrincipalName = authentication.getName();
 
         Optional<User> userOptional = userRepo.findByEmail(currentPrincipalName);
-        User user = userOptional.get();
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
 
-        log.info(currentPrincipalName);
-        Flow flow = new Flow();
+            log.info(currentPrincipalName);
+            Flow flow = new Flow();
 
-        flow.setPid(String.valueOf(UUID.randomUUID()));
-        flow.setUser(user);
-        flow.setImage(image);
-        flow.setLastUpdate(Timestamp.valueOf(LocalDateTime.now()));
-        flow.setCreationDate(Timestamp.valueOf(LocalDateTime.now()));
+            flow.setPid(String.valueOf(UUID.randomUUID()));
+            flow.setUser(user);
+            flow.setImage(image);
+            flow.setLastUpdate(Timestamp.valueOf(LocalDateTime.now()));
+            flow.setCreationDate(Timestamp.valueOf(LocalDateTime.now()));
 
-        flowRepo.save(flow);
+            flowRepo.save(flow);
+        } else {
+            throw new ServiceException(OPTIONAL_FOUND_EMPTY);
+        }
+
     }
 }
