@@ -1,5 +1,6 @@
 package com.api.imageinterpretor.service;
 
+import com.api.imageinterpretor.controller.exception.ServiceException;
 import com.api.imageinterpretor.model.Flow;
 import com.api.imageinterpretor.model.Image;
 import com.api.imageinterpretor.model.User;
@@ -8,17 +9,18 @@ import com.api.imageinterpretor.model.repository.ImageRepo;
 import com.api.imageinterpretor.model.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.api.imageinterpretor.exception.ErrorCodes.IMAGE_NOT_FOUND;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,7 +37,7 @@ public class RetrieveServiceImpl {
 
         List<Flow> all = flowRepo.findAllByUser(user);
         List<Long> imageList = new ArrayList<>();
-        for(var e : all){
+        for (var e : all) {
             Long id = e.getImage().getId();
             imageList.add(id);
         }
@@ -43,10 +45,10 @@ public class RetrieveServiceImpl {
     }
 
 
-    public InputStream getImage(Long id) throws IOException {
+    public InputStream getImage(Long id) throws ServiceException {
 
         List<Long> listOfImagesForCurrentUser = getAllByAUser();
-        if (listOfImagesForCurrentUser.contains(id)){
+        if (listOfImagesForCurrentUser.contains(id)) {
             Optional<Image> imageOptional = imageRepo.findById(id);
             Image image = imageOptional.get();
 
@@ -55,9 +57,9 @@ public class RetrieveServiceImpl {
             InputStream inputStream = new ByteArrayInputStream(base64);
 
             return inputStream;
-        }else {
+        } else {
             log.info("Image could not be found !! ");
-            throw new RuntimeException();
+            throw new ServiceException(IMAGE_NOT_FOUND,"Image Could not be found");
         }
 
     }

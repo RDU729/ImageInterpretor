@@ -1,5 +1,6 @@
 package com.api.imageinterpretor.controller;
 
+import com.api.imageinterpretor.controller.exception.ServiceException;
 import com.api.imageinterpretor.service.RetrieveServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class RetrieveController {
     }
 
     @RequestMapping(path = "retrieve/{path}")
-    public ResponseEntity<InputStreamResource> retrieveOne(@PathVariable("path") Long path) throws IOException {
+    public ResponseEntity<InputStreamResource> retrieveOne(@PathVariable("path") Long path) throws IOException, ServiceException {
         InputStream image = retrieveService.getImage(path);
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
