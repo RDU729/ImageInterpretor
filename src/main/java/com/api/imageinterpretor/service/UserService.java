@@ -15,8 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
-import static com.api.imageinterpretor.exception.ErrorCodes.ACTIVATION_TOKEN_DID_NOT_MATCH_ANY_USER;
-import static com.api.imageinterpretor.exception.ErrorCodes.ACTIVATION_TOKEN_MATCHED_MORE_THAN_ONE_USER;
+import static com.api.imageinterpretor.exception.ErrorCodes.*;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -32,30 +31,34 @@ public class UserService {
     }
 
     public void signUp(SignUpDTO signUpDTO) {
+        if(userRepo.findByEmail(signUpDTO.getEmail()).isEmpty()){
 
-        User user = new User();
-        String encodedPass = passwordEncoder().encode(signUpDTO.getPassword());
-        String noopEncodedPass = "{noop}" + encodedPass;
+            User user = new User();
+            String encodedPass = passwordEncoder().encode(signUpDTO.getPassword());
+            String noopEncodedPass = "{noop}" + encodedPass;
 
-        user.setName(signUpDTO.getName());
-        user.setEmail(signUpDTO.getEmail());
-        user.setPassword(noopEncodedPass);
-        user.setEnabled(0);
-        //UUID.randomUUID()
+            user.setName(signUpDTO.getName());
+            user.setEmail(signUpDTO.getEmail());
+            user.setPassword(noopEncodedPass);
+            user.setEnabled(0);
+            //UUID.randomUUID()
 
-        String activationCode = String.valueOf(UUID.randomUUID());
-        user.setActivationCode(activationCode);
-        userRepo.save(user);
+            String activationCode = String.valueOf(UUID.randomUUID());
+            user.setActivationCode(activationCode);
+            userRepo.save(user);
 
-        Authorities authorities = new Authorities();
+            Authorities authorities = new Authorities();
 
-        authorities.setEmail(signUpDTO.getEmail());
-        authorities.setAuthority("ROLE_USER");
-        authRepo.save(authorities);
+            authorities.setEmail(signUpDTO.getEmail());
+            authorities.setAuthority("ROLE_USER");
+            authRepo.save(authorities);
 
-        emailService.sendActivationEmail(signUpDTO.getEmail(), activationCode);
+            emailService.sendActivationEmail(signUpDTO.getEmail(), activationCode);
 
-        log.info(String.valueOf(user));
+            log.info(String.valueOf(user));
+        }else {
+            throw new ServiceException(USER_ALREADY_EXISTS_WITH_THIS_EMAIL);
+        }
     }
 
     public void activateAccount(String uuid) {
@@ -69,10 +72,10 @@ public class UserService {
                 activationCheck++;
             }
         if (activationCheck == 0) {
-            throw new ServiceException(ACTIVATION_TOKEN_DID_NOT_MATCH_ANY_USER, "Activation token did not correspond to any user");
+            throw new ServiceException(ACTIVATION_TOKEN_DID_NOT_MATCH_ANY_USER);
         }
         if (activationCheck > 1) {
-            throw new ServiceException(ACTIVATION_TOKEN_MATCHED_MORE_THAN_ONE_USER, "Activation token activated more than one user");
+            throw new ServiceException(ACTIVATION_TOKEN_MATCHED_MORE_THAN_ONE_USER);
         }
     }
 }

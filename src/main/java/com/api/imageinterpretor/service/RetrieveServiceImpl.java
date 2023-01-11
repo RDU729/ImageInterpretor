@@ -57,11 +57,11 @@ public class RetrieveServiceImpl {
 
                 return new ByteArrayInputStream(base64);
             } else {
-                throw new ServiceException(OPTIONAL_FOUND_EMPTY, "Optional, contained no value");
+                throw new ServiceException(OPTIONAL_FOUND_EMPTY);
             }
         } else {
             log.info("Image could not be found !! ");
-            throw new ServiceException(IMAGE_NOT_FOUND, "Image Could not be found");
+            throw new ServiceException(IMAGE_NOT_FOUND);
         }
     }
 
@@ -74,7 +74,7 @@ public class RetrieveServiceImpl {
             User user = userOptional.get();
             return user;
         } else {
-            throw new ServiceException(OPTIONAL_FOUND_EMPTY, "Optional, contained no value");
+            throw new ServiceException(OPTIONAL_FOUND_EMPTY);
         }
     }
 }

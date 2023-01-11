@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import static com.api.imageinterpretor.exception.ErrorCodes.UNABLE_TO_SEND_EMAIL;
+import static com.api.imageinterpretor.utils.Constants.BASE_ACTIVATION_LINK;
 
 @Slf4j
 @Service
@@ -35,12 +36,12 @@ public class EmailServiceImpl {
             log.info("Mail sent to {}, with subject {} and body {}", to, subject, text);
         } catch (Exception e) {
             log.info("Error while Sending Mail with message {}", e.getMessage());
-            throw new ServiceException(UNABLE_TO_SEND_EMAIL, "Unable to send email");
+            throw new ServiceException(UNABLE_TO_SEND_EMAIL);
         }
     }
 
     public void sendActivationEmail(String recipient, String activationCode) {
-        String activationLink = "http://localhost:8080/api/v1/activate/" /*+ recipient + "/"*/ + activationCode;
+        String activationLink = BASE_ACTIVATION_LINK  + activationCode;
         String body = "Hi and thank you for registering. The activation link is  " + activationLink;
         sendSimpleMail(recipient, body, "Acount Activation Email");
     }

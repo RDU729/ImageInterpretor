@@ -8,6 +8,11 @@ public class ServiceException extends RuntimeException {
     private ErrorCodes errorCode;
     private String message;
 
+    public ServiceException(ErrorCodes errorCode) {
+        this.errorCode = errorCode;
+        this.message = errorCode.getMessage();
+    }
+
     public ServiceException(ErrorCodes errorCode, String message) {
         this.errorCode = errorCode;
         this.message = message;

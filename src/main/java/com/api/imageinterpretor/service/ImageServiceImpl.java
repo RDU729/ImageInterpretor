@@ -11,9 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Optional;
 
-import static com.api.imageinterpretor.exception.ErrorCodes.*;
+import static com.api.imageinterpretor.exception.ErrorCodes.FILE_COULD_NOT_BE_READ;
+import static com.api.imageinterpretor.exception.ErrorCodes.IMAGE_COULD_NOT_BE_SAVED;
 
 @Service
 @RequiredArgsConstructor
@@ -40,24 +40,11 @@ public class ImageServiceImpl {
 
             } catch (Exception e) {
                 log.info(e.getMessage());
-                throw new ServiceException(IMAGE_COULD_NOT_BE_SAVED, "Error occurred when trying to save image");
+                throw new ServiceException(IMAGE_COULD_NOT_BE_SAVED);
             }
             return targetStream;
         } catch (IOException ioException) {
-            throw new ServiceException(FILE_COULD_NOT_BE_READ, "Error occurred when trying to read file");
+            throw new ServiceException(FILE_COULD_NOT_BE_READ);
         }
-    }
-
-    public InputStream getImage(Long id) {
-        Optional<Image> imageOptional = imageRepo.findById(id);
-        if (imageOptional.isPresent()) {
-            Image image = imageOptional.get();
-            byte[] base64 = image.getBase64();
-
-            return new ByteArrayInputStream(base64);
-        } else {
-            throw new ServiceException(OPTIONAL_FOUND_EMPTY, "Optional, contained no value");
-        }
-
     }
 }

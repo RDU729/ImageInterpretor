@@ -48,7 +48,7 @@ public class FlowServiceImpl {
 
             flowRepo.save(flow);
         } else {
-            throw new ServiceException(OPTIONAL_FOUND_EMPTY, "Optional, contained no value");
+            throw new ServiceException(OPTIONAL_FOUND_EMPTY);
         }
 
     }

@@ -3,11 +3,11 @@ package com.api.imageinterpretor.model;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.checkerframework.common.aliasing.qual.Unique;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
@@ -18,13 +18,15 @@ import java.util.List;
 @Table(name = "utilizatori")
 public class User {
 
-
-    private String name;
-    //@Column(nullable = false, unique = true, length = 45)
     @Id
+    @Email(message = "Email should be valid")
+    @Column(unique = true)
     private String email;
 
-    //@Column(nullable = false, length = 64)
+    @NotNull(message = "Name cannot be null")
+    private String name;
+
+    @NotNull(message = "Password cannot be null")
     private String password;
 
     private int enabled;
