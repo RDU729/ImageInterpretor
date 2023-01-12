@@ -21,7 +21,7 @@ public class UserController {
         return ResponseEntity.ok("Signup successfull. An email has been sent to your email address");
     }
 
-    @RequestMapping(path = "activate/{hash}")
+    @PostMapping(path = "activate/{hash}")
     public ResponseEntity<String> activateAccount(/*@PathVariable("email") String email,*/
                                                   @PathVariable("hash") String uuid) {
         userService.activateAccount(/*email,*/uuid);

@@ -90,7 +90,6 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.3.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.javassist/javassist -->
         <dependency>
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
@@ -126,22 +125,39 @@
             <artifactId>javax.el</artifactId>
             <version>3.0.0</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>commons-io</groupId>-->
-<!--            <artifactId>commons-io</artifactId>-->
-<!--            <version>2.11.0</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-core</artifactId>
             <version>1.16</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.tika/tika-parsers -->
         <dependency>
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-parsers</artifactId>
             <version>1.16</version>
         </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.2.32</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.springfox</groupId>-->
+<!--            <artifactId>springfox-swagger2</artifactId>-->
+<!--            <version>2.8.0</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.springfox</groupId>-->
+<!--            <artifactId>springfox-swagger-ui</artifactId>-->
+<!--            <version>2.8.0</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+
     </dependencies>
 
    <build>
@@ -175,8 +191,10 @@
                     <defaultSchema>schema2</defaultSchema>
                     <driver>org.oracle.jdbc.driver</driver>
                     <url>jdbc:oracle:thin:@//localhost:1521/XEPDB1</url>
-                    <user>system</user>
-                    <password>SysPassword1</password>
+<!--                    <user>system</user>-->
+<!--                    <password>SysPassword1</password>-->
+                    <user>java</user>
+                    <password>java</password>
                     <baselineOnMigrate>true</baselineOnMigrate>
                     <schemas>public</schemas>
                     <locations>
