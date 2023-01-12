@@ -3,11 +3,11 @@ package com.api.imageinterpretor.model;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.checkerframework.common.aliasing.qual.Unique;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -33,7 +33,13 @@ public class User {
 
     private String activationCode;
 
+    private int offence;
+
+    @Column(name = "disable_date")
+    private Timestamp disableDate;
+
     @OneToMany(mappedBy = "user")
+    @ToString.Exclude
     private List<Flow> flow;
 }
 

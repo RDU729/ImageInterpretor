@@ -14,6 +14,7 @@ import org.springframework.test.annotation.Rollback;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
+import static com.api.imageinterpretor.utils.TestUtils.buildUser;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -26,18 +27,6 @@ class UserServiceTest {
 
     @Autowired
     UserRepo userRepo;
-
-    private static User buildUser() {
-        User user = new User();
-        user.setName("Radu");
-        user.setEmail("radu@gmail.com");
-        user.setPassword("password");
-        user.setActivationCode("activationCode");
-        user.setFlow(null);
-        user.setEnabled(0);
-        return user;
-    }
-
 
     @Test
     @Transactional
