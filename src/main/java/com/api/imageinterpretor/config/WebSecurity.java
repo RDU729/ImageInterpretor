@@ -32,7 +32,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests(authorize -> {
                     authorize.antMatchers("/api/v1/hi", "/api/v1/signup"
-                            ,"/api/v1/activate/**","/api/v1/retrieve/**","/api/v1/hi/**").permitAll();
+                            ,"/api/v1/activate/**","/api/v1/retrieve/**","/api/v1/hi/**"
+                            ,"/actuator/prometheus").permitAll();
                 })
                 .authorizeRequests()
                 .anyRequest().authenticated()
