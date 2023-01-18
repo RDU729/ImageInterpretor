@@ -2,7 +2,9 @@ package com.api.imageinterpretor.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,7 +35,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(authorize -> {
-                    authorize.antMatchers(PERMITED_LOCATIONS).permitAll();
+                    authorize.antMatchers("/api/v1/hi", "/api/v1/signup","/api/v1/login"
+                            ,"/api/v1/activate/**","/api/v1/retrieve/**","/api/v1/hi/**"
+                            ,"/actuator/prometheus").permitAll();
                 })
                 .authorizeRequests()
                 .anyRequest().authenticated()
@@ -41,5 +45,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .formLogin().and()
                 .csrf().disable()
                 .httpBasic();
+    }
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .build();
     }
 }

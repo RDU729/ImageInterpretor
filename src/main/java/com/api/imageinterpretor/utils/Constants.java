@@ -21,7 +21,7 @@ public interface Constants {
 
     String LOGGED_OUT_RESPONSE = "Logged out";
 
-    String[] PERMITED_LOCATIONS = new String[]{"/api/v1/hi", "/api/v1/signup"
+    String[] PERMITED_LOCATIONS = new String[]{"/api/v1/hi", "/api/v1/signup","/api/v1/login"
             ,"/api/v1/activate/**","/api/v1/retrieve/**","/api/v1/hi/**"
             ,"/actuator/prometheus"};
 }

@@ -38,7 +38,7 @@ public class ImageController {
                 .body(new InputStreamResource(inputStream1));
     }
 
-    @GetMapping(value = "/hi/")
+    @GetMapping(value = "/hi")
     public ResponseEntity<String> sayHi() {
         return ResponseEntity.ok("Hi");
     }
