@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import javax.sql.DataSource;
 
+import static com.api.imageinterpretor.utils.Constants.PERMITED_LOCATIONS;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -31,9 +33,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(authorize -> {
-                    authorize.antMatchers("/api/v1/hi", "/api/v1/signup"
-                            ,"/api/v1/activate/**","/api/v1/retrieve/**","/api/v1/hi/**"
-                            ,"/actuator/prometheus").permitAll();
+                    authorize.antMatchers(PERMITED_LOCATIONS).permitAll();
                 })
                 .authorizeRequests()
                 .anyRequest().authenticated()

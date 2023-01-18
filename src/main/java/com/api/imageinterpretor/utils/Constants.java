@@ -20,4 +20,8 @@ public interface Constants {
     String ACCOUNT_ACTIVATED_RESPONSE = "Account activated";
 
     String LOGGED_OUT_RESPONSE = "Logged out";
+
+    String[] PERMITED_LOCATIONS = new String[]{"/api/v1/hi", "/api/v1/signup"
+            ,"/api/v1/activate/**","/api/v1/retrieve/**","/api/v1/hi/**"
+            ,"/actuator/prometheus"};
 }
