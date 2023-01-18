@@ -1,6 +1,5 @@
 package com.api.imageinterpretor.controller;
 
-import com.api.imageinterpretor.dto.LoginDTO;
 import com.api.imageinterpretor.dto.SignUpDTO;
 import com.api.imageinterpretor.service.UserService;
 import lombok.AllArgsConstructor;
@@ -8,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import static com.api.imageinterpretor.utils.Constants.*;
 
 
 @RestController
@@ -20,24 +21,24 @@ public class UserController {
     @PostMapping(value = "/signup")
     public ResponseEntity<String> processRegister(@RequestBody SignUpDTO signUpDTO) {
         userService.signUp(signUpDTO);
-        return ResponseEntity.ok("Signup successfull. An email has been sent to your email address");
+        return ResponseEntity.ok(SIGN_UP_RESPONSE);
     }
 
-    @PostMapping(path = "activate/{hash}")
+    @GetMapping(path = "activate/{hash}")
     public ResponseEntity<String> activateAccount(@PathVariable("hash") String uuid) {
         userService.activateAccount(uuid);
-        return ResponseEntity.ok("Account activated");
+        return ResponseEntity.ok(ACCOUNT_ACTIVATED_RESPONSE);
     }
 
     @PostMapping(path = "/login")
     public ResponseEntity<String> login(/*@RequestBody LoginDTO loginDTO*/) throws Exception {
 
-        return ResponseEntity.ok("Logged in");
+        return ResponseEntity.ok(LOG_IN_RESPONSE);
     }
 
     @PostMapping(path = "/logout")
     public ResponseEntity<String> logout() {
         SecurityContextHolder.getContext().setAuthentication(null);
-        return ResponseEntity.ok("Logged out");
+        return ResponseEntity.ok(LOGGED_OUT_RESPONSE);
     }
 }

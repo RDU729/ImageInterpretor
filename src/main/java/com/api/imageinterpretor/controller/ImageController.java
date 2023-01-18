@@ -43,9 +43,9 @@ public class ImageController {
         return ResponseEntity.ok("Hi");
     }
 
-    @PostMapping("/predict")
-    public ResponseEntity<String> predictImage() throws IOException, ExecutionException, InterruptedException {
-        String predict = predictService.predict();
+    @PostMapping("/predict/{id}")
+    public ResponseEntity<String> predictImage(@PathVariable("id") Long id) throws IOException, ExecutionException, InterruptedException {
+        String predict = predictService.predict(id);
         return ResponseEntity.ok(predict);
     }
 }
