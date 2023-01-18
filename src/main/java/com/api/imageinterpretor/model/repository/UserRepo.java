@@ -11,10 +11,6 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 
-    Optional<User> findByEmailAndName(String email, String name);
-
-    Optional<User> findByActivationCode(String activationCode);
-
     @Query(value = "SELECT * FROM utilizatori WHERE DISABLE_DATE > SYSDATE - 1/1440", nativeQuery = true)
     List<User> findOlderThat1Min();
 }

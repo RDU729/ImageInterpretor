@@ -40,8 +40,6 @@ public class UserService {
         return new BCryptPasswordEncoder();
     }
 
-
-
     public void signUp(SignUpDTO signUpDTO) {
         if(userRepo.findByEmail(signUpDTO.getEmail()).isEmpty()){
 
@@ -107,7 +105,6 @@ public class UserService {
     private User getCurrentUser() {
         return getUser(userRepo);
     }
-
 }
 
 

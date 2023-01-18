@@ -50,6 +50,5 @@ public class FlowServiceImpl {
         } else {
             throw new ServiceException(OPTIONAL_FOUND_EMPTY);
         }
-
     }
 }

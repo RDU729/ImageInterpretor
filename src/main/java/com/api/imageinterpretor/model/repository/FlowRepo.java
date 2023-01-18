@@ -5,11 +5,8 @@ import com.api.imageinterpretor.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface FlowRepo extends JpaRepository<Flow, Long> {
 
     List<Flow> findAllByUser(User user);
-    Optional<Flow> findByPid(String pid);
-
 }
