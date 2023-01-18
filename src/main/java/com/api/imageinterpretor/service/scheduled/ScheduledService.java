@@ -1,4 +1,4 @@
-package com.api.imageinterpretor.service.scheguled;
+package com.api.imageinterpretor.service.scheduled;
 
 import com.api.imageinterpretor.model.User;
 import com.api.imageinterpretor.model.repository.UserRepo;

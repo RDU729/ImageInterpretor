@@ -42,7 +42,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().and()
                 .csrf().disable()
-                .httpBasic();
+                .httpBasic().and()
+                .logout()
+                .deleteCookies("JSESSIONID")
+                .and()
+                .rememberMe()
+                .key("uniqueAndSecret");
     }
 
     @Bean
