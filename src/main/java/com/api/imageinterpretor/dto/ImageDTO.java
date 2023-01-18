@@ -9,5 +9,4 @@ import lombok.ToString;
 @ToString
 public class ImageDTO {
     private String base64;
-
 }

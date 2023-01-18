@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,13 +24,13 @@ public class RetrieveController {
     @Autowired
     RetrieveServiceImpl retrieveService;
 
-    @RequestMapping(path = "retrieve/all")
+    @GetMapping(path = "retrieve/all")
     public ResponseEntity<List<Long>> retrieveAll() {
         List<Long> allByAUser = retrieveService.getAllByAUser();
         return ResponseEntity.ok(allByAUser);
     }
 
-    @RequestMapping(path = "retrieve/{path}")
+    @GetMapping(path = "retrieve/{path}")
     public ResponseEntity<InputStreamResource> retrieveOne(@PathVariable("path") Long path) throws IOException, ServiceException {
         InputStream image = retrieveService.getImage(path);
         return ResponseEntity.ok()

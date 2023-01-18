@@ -44,6 +44,7 @@ public class UserService {
             user.setEmail(signUpDTO.getEmail());
             user.setPassword(noopEncodedPass);
             user.setEnabled(0);
+            user.setOffence(0);
 
             String activationCode = String.valueOf(UUID.randomUUID());
             user.setActivationCode(activationCode);

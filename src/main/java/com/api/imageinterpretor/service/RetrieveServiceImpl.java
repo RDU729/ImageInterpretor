@@ -9,8 +9,6 @@ import com.api.imageinterpretor.model.repository.ImageRepo;
 import com.api.imageinterpretor.model.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -21,6 +19,7 @@ import java.util.Optional;
 
 import static com.api.imageinterpretor.exception.ErrorCodes.IMAGE_NOT_FOUND;
 import static com.api.imageinterpretor.exception.ErrorCodes.OPTIONAL_FOUND_EMPTY;
+import static com.api.imageinterpretor.service.utils.ServiceUtils.getUser;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -66,15 +65,6 @@ public class RetrieveServiceImpl {
     }
 
     private User getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        authentication.getPrincipal();
-        String currentPrincipalName = authentication.getName();
-        Optional<User> userOptional = userRepo.findByEmail(currentPrincipalName);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            return user;
-        } else {
-            throw new ServiceException(OPTIONAL_FOUND_EMPTY);
-        }
+        return getUser(userRepo);
     }
 }
