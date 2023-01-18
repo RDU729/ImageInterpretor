@@ -7,6 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ImageDTO {
-    private String base64;
+public class LoginDTO {
+    private String email;
+    private String password;
 }
