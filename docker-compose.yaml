@@ -1,0 +1,22 @@
+version: '3'
+services:
+  web:
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - oracle
+
+  oracle:
+    platform: linux/x86_64
+    image: nexus:5000/spring-boot-example/oracle:1.0
+    restart: always
+    ports:
+      - "1522:1521"
+    environment:
+      - USER=java
+      - PASS=java
+      - HOST=oracle-database
+      - PORT=1521
+      - ORACLE_SID=XE
