@@ -33,6 +33,7 @@ public class EmailServiceImpl {
             mailMessage.setSubject(text);
 
             javaMailSender.send(mailMessage);
+            log.info("Mail sent successfully");
             log.info("Mail sent to {}, with subject {} and body {}", to, subject, text);
         } catch (Exception e) {
             log.info("Error while Sending Mail with message {}", e.getMessage());
