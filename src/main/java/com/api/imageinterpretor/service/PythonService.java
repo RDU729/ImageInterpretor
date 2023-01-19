@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
@@ -18,23 +17,35 @@ import java.util.concurrent.Future;
 @Slf4j
 public class PythonService {
 
-    public String runPy() throws IOException, InterruptedException, ExecutionException {
+    public String runPy() {
+        log.info("Starting python prediction");
         List<String> pythonOutPut = new ArrayList<>();
+        String finalString = "";
 
-        Process p2 = Runtime.getRuntime().exec("python3 main.py");
-        StreamGobbler streamGobbler =
-                new StreamGobbler(p2.getInputStream(), pythonOutPut);
+        try {
+            Process p2 = Runtime.getRuntime().exec("python3 main.py");
 
-        Future<?> future = Executors.newSingleThreadExecutor().submit(streamGobbler);
+            StreamGobbler streamGobbler =
+                    new StreamGobbler(p2.getInputStream(), pythonOutPut);
 
-        int exitCode = p2.waitFor();
+            Future<?> future = Executors.newSingleThreadExecutor().submit(streamGobbler);
+            try {
+                int exitCode = p2.waitFor();
 
-        assert exitCode == 0;
+                assert exitCode == 0;
+            } catch (InterruptedException e) {
+                log.info(e.getMessage());
+            }
 
-        String s = pythonOutPut.get(pythonOutPut.size() - 1);
-        String[] split = s.split(":");
-        log.info(split[1]);
-        return split[1];
+            String s = pythonOutPut.get(pythonOutPut.size() - 1);
+            String[] split = s.split(":");
+            log.info(split[1]);
+            finalString = split[1];
+            log.info("Python script ended");
+        } catch (IOException e) {
+            log.info(e.getMessage());
+        }
+        return finalString;
     }
 
     @AllArgsConstructor

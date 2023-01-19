@@ -21,6 +21,8 @@ public enum ErrorCodes implements GlobalErrorCodes {
     IMAGE_NOT_FOUND("Image not found"),
     IMAGE_COULD_NOT_BE_SAVED("Error occurred when trying to save image"),
 
+    COULD_NOT_READ_WRITE_FILE_FOR_PREDICTION("The temporary used to make predictions could not be read or wrote"),
+
     EXCEEDED_3_OFFENCES("Account will be deactivated for 1 minute"),
     HARMFUL_FILE("Harmful file detected! Only jpg allowed"),
     UNSUPPORTED_FILE_TYPE("Wrong file format uploaded");

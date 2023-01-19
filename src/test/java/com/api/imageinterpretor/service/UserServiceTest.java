@@ -1,19 +1,25 @@
 package com.api.imageinterpretor.service;
 
 import com.api.imageinterpretor.controller.exception.ServiceException;
+import com.api.imageinterpretor.dto.LoginDTO;
 import com.api.imageinterpretor.dto.SignUpDTO;
 import com.api.imageinterpretor.model.User;
 import com.api.imageinterpretor.model.repository.UserRepo;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.AssertionsForClassTypes;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
 
+import static com.api.imageinterpretor.service.utils.ServiceUtils.getUser;
 import static com.api.imageinterpretor.utils.TestUtils.buildUser;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -152,4 +158,48 @@ class UserServiceTest {
         assertThat(exception.getMessage())
                 .isEqualTo("Email address does not appear to be valid");
     }
+
+    @Test
+    @DisplayName("Given correct credential should login successfully")
+    void test_login_successful() {
+        //Given
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setEmail("sa2@sa");
+        loginDTO.setPassword("sa");
+
+        //When
+        userService.login(loginDTO);
+
+        //Then
+        User currentUser = getCurrentUser();
+        assertThat(currentUser.getEmail()).isEqualTo(loginDTO.getEmail());
+    }
+
+    @Test
+    @DisplayName("Given incorrect credentials should not be able to login")
+    void test_login_failed() {
+        //Given
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setEmail("INCORRECT");
+        loginDTO.setPassword("INCORRECT");
+
+        //When
+        BadCredentialsException exception = assertThrows(BadCredentialsException.class, () -> {
+            userService.login(loginDTO);
+        });
+
+        //Then
+        AssertionsForClassTypes.assertThat(exception.getMessage())
+                .isEqualTo("Bad credentials");
+    }
+
+    @AfterEach
+    void tearDown() {
+        SecurityContextHolder.getContext().setAuthentication(null);
+    }
+
+    private User getCurrentUser() {
+        return getUser(userRepo);
+    }
+
 }

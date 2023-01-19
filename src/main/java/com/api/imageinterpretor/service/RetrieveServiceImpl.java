@@ -44,7 +44,6 @@ public class RetrieveServiceImpl {
 
 
     public InputStream getImage(Long id) {
-
         List<Long> listOfImagesForCurrentUser = getAllByAUser();
         if (listOfImagesForCurrentUser.contains(id)) {
             Optional<Image> imageOptional = imageRepo.findById(id);
