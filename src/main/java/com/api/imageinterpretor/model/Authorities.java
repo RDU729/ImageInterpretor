@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Authorities {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auth_generator")
     private Long id;
 
     private String email;

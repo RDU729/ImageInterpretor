@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @Table(name = "flow")
 public class Flow {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "flow_generator")
     private Long id;
 
     private String pid;

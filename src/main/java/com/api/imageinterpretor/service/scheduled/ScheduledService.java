@@ -1,4 +1,4 @@
-package com.api.imageinterpretor.service.scheguled;
+package com.api.imageinterpretor.service.scheduled;
 
 import com.api.imageinterpretor.model.User;
 import com.api.imageinterpretor.model.repository.UserRepo;
@@ -17,7 +17,7 @@ public class ScheduledService {
     private final UserRepo userRepo;
 
     @Scheduled(cron = "1 * * * * *")
-    private void reactivateUsers() {
+    public void reactivateUsers() {
         List<User> olderThat1Min = userRepo.findOlderThat1Min();
         log.info("running scheduled task");
         olderThat1Min.forEach(user -> {
