@@ -48,8 +48,8 @@ public class UserService {
                 throw new ServiceException(INVALID_EMAIL_ADDRESS_FORMAT);
             }
             String encodedPass = passwordEncoder().encode(signUpDTO.getPassword());
-            //String noopEncodedPass = "{noop}" + signUpDTO.getPassword();
-            String noopEncodedPass = "{noop}" + encodedPass;
+            String noopEncodedPass = "{noop}" + signUpDTO.getPassword();
+            //String noopEncodedPass = "{noop}" + encodedPass;
 
             user.setName(signUpDTO.getName());
             user.setEmail(signUpDTO.getEmail());

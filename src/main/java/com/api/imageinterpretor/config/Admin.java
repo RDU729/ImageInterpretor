@@ -29,7 +29,7 @@ public class Admin {
     void createAdmin() {
         User user = new User();
         user.setEmail("sa2@sa");
-        user.setPassword(encodedPass);
+        user.setPassword("{noop}sa");
         user.setName("sa");
         user.setEnabled(1);
         user.setActivationCode("n/a");

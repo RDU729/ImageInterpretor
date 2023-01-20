@@ -184,13 +184,10 @@ class UserServiceTest {
         loginDTO.setPassword("INCORRECT");
 
         //When
-        BadCredentialsException exception = assertThrows(BadCredentialsException.class, () -> {
-            userService.login(loginDTO);
-        });
+        boolean login = userService.login(loginDTO);
 
         //Then
-        AssertionsForClassTypes.assertThat(exception.getMessage())
-                .isEqualTo("Bad credentials");
+        assertThat(login).isFalse();
     }
 
     @AfterEach
