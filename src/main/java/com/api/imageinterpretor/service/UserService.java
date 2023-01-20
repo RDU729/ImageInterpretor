@@ -33,6 +33,7 @@ public class UserService {
     private final UserRepo userRepo;
     private final AuthoritiesRepo authRepo;
     private final EmailServiceImpl emailService;
+
     @Autowired
     AuthenticationManager authManager;
 
@@ -48,12 +49,10 @@ public class UserService {
                 throw new ServiceException(INVALID_EMAIL_ADDRESS_FORMAT);
             }
             String encodedPass = passwordEncoder().encode(signUpDTO.getPassword());
-            String noopEncodedPass = "{noop}" + signUpDTO.getPassword();
-            //String noopEncodedPass = "{noop}" + encodedPass;
 
             user.setName(signUpDTO.getName());
             user.setEmail(signUpDTO.getEmail());
-            user.setPassword(noopEncodedPass);
+            user.setPassword(encodedPass);
             user.setEnabled(0);
             user.setOffence(0);
 

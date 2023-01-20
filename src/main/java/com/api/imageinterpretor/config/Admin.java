@@ -19,7 +19,7 @@ public class Admin {
     @Autowired
     AuthoritiesRepo authoritiesRepo;
 
-    String encodedPass = "{noop}" + passwordEncoder().encode("sa");
+    String encodedPass =  passwordEncoder().encode("sa");
 
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -29,7 +29,7 @@ public class Admin {
     void createAdmin() {
         User user = new User();
         user.setEmail("sa2@sa");
-        user.setPassword("{noop}sa");
+        user.setPassword(encodedPass);
         user.setName("sa");
         user.setEnabled(1);
         user.setActivationCode("n/a");
