@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static com.api.imageinterpretor.exception.ErrorCodes.*;
@@ -29,25 +30,25 @@ import static com.api.imageinterpretor.service.utils.ServiceUtils.getUser;
 @Slf4j
 @Service
 public class UserService {
-    @Autowired
-    AuthenticationManager authManager;
-
     private final UserRepo userRepo;
     private final AuthoritiesRepo authRepo;
     private final EmailServiceImpl emailService;
+    @Autowired
+    AuthenticationManager authManager;
 
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     public void signUp(SignUpDTO signUpDTO) {
-        if(userRepo.findByEmail(signUpDTO.getEmail()).isEmpty()){
+        if (userRepo.findByEmail(signUpDTO.getEmail()).isEmpty()) {
 
             User user = new User();
-            if(!signUpDTO.getEmail().contains(".")){
+            if (!signUpDTO.getEmail().contains(".")) {
                 throw new ServiceException(INVALID_EMAIL_ADDRESS_FORMAT);
             }
             String encodedPass = passwordEncoder().encode(signUpDTO.getPassword());
+            //String noopEncodedPass = "{noop}" + signUpDTO.getPassword();
             String noopEncodedPass = "{noop}" + encodedPass;
 
             user.setName(signUpDTO.getName());
@@ -69,7 +70,7 @@ public class UserService {
             emailService.sendActivationEmail(signUpDTO.getEmail(), activationCode);
 
             log.info(String.valueOf(user));
-        }else {
+        } else {
             throw new ServiceException(USER_ALREADY_EXISTS_WITH_THIS_EMAIL);
         }
     }
@@ -92,15 +93,22 @@ public class UserService {
         }
     }
 
-    public void login(LoginDTO loginDTO){
-        UsernamePasswordAuthenticationToken authReq
-                = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
-        Authentication auth = authManager.authenticate(authReq);
-        SecurityContext sc = SecurityContextHolder.getContext();
-        sc.setAuthentication(auth);
-        User currentUser = getCurrentUser();
-        log.info(String.valueOf(currentUser));
+    public boolean login(LoginDTO loginDTO) {
+        Optional<User> userOptional = userRepo.findByEmail(loginDTO.getEmail());
+        if (userOptional.isPresent()) {
+            UsernamePasswordAuthenticationToken authReq
+                    = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
+            Authentication auth = authManager.authenticate(authReq);
+            SecurityContext sc = SecurityContextHolder.getContext();
+            sc.setAuthentication(auth);
+            User currentUser = getCurrentUser();
+            log.info(String.valueOf(currentUser));
+            return true;
+        } else {
+            return false;
+        }
     }
+
 
     private User getCurrentUser() {
         return getUser(userRepo);

@@ -37,7 +37,7 @@ public class Admin {
         userRepo.save(user);
 
         Authorities authorities = new Authorities();
-        authorities.setId(2L);
+        //authorities.setId(1L);
         authorities.setEmail("sa2@sa");
         authorities.setAuthority("ROLE_ADMIN");
         authoritiesRepo.save(authorities);
