@@ -6,6 +6,7 @@ import com.api.imageinterpretor.model.Image;
 import com.api.imageinterpretor.model.User;
 import com.api.imageinterpretor.model.repository.FlowRepo;
 import com.api.imageinterpretor.model.repository.UserRepo;
+import com.api.imageinterpretor.service.interfaces.FlowService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -22,11 +23,12 @@ import static com.api.imageinterpretor.exception.ErrorCodes.OPTIONAL_FOUND_EMPTY
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class FlowServiceImpl {
+public class FlowServiceImpl implements FlowService {
 
     private final FlowRepo flowRepo;
     private final UserRepo userRepo;
 
+    @Override
     public void initFlow(Image image) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

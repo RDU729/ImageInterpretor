@@ -5,6 +5,7 @@ import com.api.imageinterpretor.model.Image;
 import com.api.imageinterpretor.model.User;
 import com.api.imageinterpretor.model.repository.ImageRepo;
 import com.api.imageinterpretor.model.repository.UserRepo;
+import com.api.imageinterpretor.service.interfaces.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tika.Tika;
@@ -24,11 +25,12 @@ import static com.api.imageinterpretor.service.utils.ServiceUtils.getUser;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ImageServiceImpl {
+public class ImageServiceImpl implements ImageService {
     private final UserRepo userRepo;
     private final ImageRepo imageRepo;
     private final FlowServiceImpl flowService;
 
+    @Override
     public InputStream saveImage(MultipartFile file) {
         try {
 

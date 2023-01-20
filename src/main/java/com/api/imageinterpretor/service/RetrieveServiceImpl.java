@@ -7,6 +7,7 @@ import com.api.imageinterpretor.model.User;
 import com.api.imageinterpretor.model.repository.FlowRepo;
 import com.api.imageinterpretor.model.repository.ImageRepo;
 import com.api.imageinterpretor.model.repository.UserRepo;
+import com.api.imageinterpretor.service.interfaces.RetriveService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,12 @@ import static com.api.imageinterpretor.service.utils.ServiceUtils.getUser;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class RetrieveServiceImpl {
+public class RetrieveServiceImpl implements RetriveService {
     private final FlowRepo flowRepo;
     private final UserRepo userRepo;
     private final ImageRepo imageRepo;
 
-
+    @Override
     public List<Long> getAllByAUser() {
         User user = getCurrentUser();
 
@@ -42,7 +43,7 @@ public class RetrieveServiceImpl {
         return imageList;
     }
 
-
+    @Override
     public InputStream getImage(Long id) {
         List<Long> listOfImagesForCurrentUser = getAllByAUser();
         if (listOfImagesForCurrentUser.contains(id)) {

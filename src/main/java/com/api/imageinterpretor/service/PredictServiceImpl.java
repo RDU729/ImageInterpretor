@@ -1,6 +1,7 @@
 package com.api.imageinterpretor.service;
 
 import com.api.imageinterpretor.controller.exception.ServiceException;
+import com.api.imageinterpretor.service.interfaces.PredictService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,13 @@ import static com.api.imageinterpretor.utils.Constants.TEMP_FILE_LOCATION;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PredictService {
+public class PredictServiceImpl implements PredictService {
 
-    private final PythonService pythonService;
+    private final PythonServiceImpl pythonServiceImpl;
 
     private final RetrieveServiceImpl retrieveService;
 
+    @Override
     public String predict(Long id) {
         InputStream file = retrieveService.getImage(id);
         try {
@@ -32,7 +34,7 @@ public class PredictService {
         } catch (IOException e) {
             throw new ServiceException(COULD_NOT_READ_WRITE_FILE_FOR_PREDICTION);
         }
-        String s = pythonService.runPy();
+        String s = pythonServiceImpl.runPy();
         File toBeDeleted = new File(TEMP_FILE_LOCATION);
         boolean delete = toBeDeleted.delete();
         if (!delete) {

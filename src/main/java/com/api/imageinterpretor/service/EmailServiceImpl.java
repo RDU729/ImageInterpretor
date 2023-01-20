@@ -1,6 +1,7 @@
 package com.api.imageinterpretor.service;
 
 import com.api.imageinterpretor.controller.exception.ServiceException;
+import com.api.imageinterpretor.service.interfaces.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,7 @@ import static com.api.imageinterpretor.utils.Constants.*;
 
 @Slf4j
 @Service
-public class EmailServiceImpl {
+public class EmailServiceImpl implements EmailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -41,6 +42,7 @@ public class EmailServiceImpl {
         }
     }
 
+    @Override
     public void sendActivationEmail(String recipient, String activationCode) {
         String activationLink = BASE_ACTIVATION_LINK + activationCode;
         String body = ACTIVATION_MAIL_MESSAGE + activationLink;

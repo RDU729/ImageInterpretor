@@ -1,5 +1,6 @@
 package com.api.imageinterpretor.service;
 
+import com.api.imageinterpretor.service.interfaces.PythonService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,9 @@ import java.util.concurrent.Future;
 
 @Service
 @Slf4j
-public class PythonService {
+public class PythonServiceImpl implements PythonService {
 
+    @Override
     public String runPy() {
         log.info("Starting python prediction");
         List<String> pythonOutPut = new ArrayList<>();

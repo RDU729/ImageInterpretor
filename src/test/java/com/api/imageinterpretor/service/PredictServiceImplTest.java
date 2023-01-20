@@ -16,22 +16,22 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @Slf4j
-class PredictServiceTest {
+class PredictServiceImplTest {
 
     private final String FROM = "src/test/java/com/api/imageinterpretor/utils/bsh.jpg";
     private final String TO = "src/main/resources/pyImages/d.jpg";
 
     @Mock
-    PythonService pythonService;
+    PythonServiceImpl pythonServiceImpl;
 
     @Mock
     RetrieveServiceImpl retrieveService;
 
-    PredictService predictService;
+    PredictServiceImpl predictServiceImpl;
 
     @BeforeEach
     void setUp() {
-        predictService = new PredictService(pythonService, retrieveService);
+        predictServiceImpl = new PredictServiceImpl(pythonServiceImpl, retrieveService);
     }
 
     @Test
@@ -44,7 +44,7 @@ class PredictServiceTest {
         when(retrieveService.getImage(anyLong())).thenReturn(in);
 
         //When
-        predictService.predict(1L);
+        predictServiceImpl.predict(1L);
 
         //Then
     }

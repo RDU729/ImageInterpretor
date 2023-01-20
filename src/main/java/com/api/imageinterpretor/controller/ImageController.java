@@ -1,7 +1,7 @@
 package com.api.imageinterpretor.controller;
 
 import com.api.imageinterpretor.service.ImageServiceImpl;
-import com.api.imageinterpretor.service.PredictService;
+import com.api.imageinterpretor.service.PredictServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -22,7 +22,7 @@ public class ImageController {
     private ImageServiceImpl imageService;
 
     @Autowired
-    private PredictService predictService;
+    private PredictServiceImpl predictServiceImpl;
 
 
     @PostMapping(value = "/sendPhoto")
@@ -41,7 +41,7 @@ public class ImageController {
 
     @PostMapping("/predict/{id}")
     public ResponseEntity<String> predictImage(@PathVariable("id") Long id) throws IOException, ExecutionException, InterruptedException {
-        String predict = predictService.predict(id);
+        String predict = predictServiceImpl.predict(id);
         return ResponseEntity.ok(predict);
     }
 }
